@@ -1,0 +1,757 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CapstoneDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alerts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="TimeCreated" Type="datetime" Nullable="false" />
+          <Property Name="TimeResponded" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ItemAlerts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlertId" Type="int" Nullable="false" />
+          <Property Name="RestaurantItemId" Type="int" Nullable="false" />
+          <Property Name="StockCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PhoneNum" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="BalanceOwed" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantGroups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="OwnerId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="StockCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="State" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="PhoneNum" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScheduleDays">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="DayOfWeek" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Stocks">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="isOwner" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Restauran__ItemI__1EA48E88">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="RestaurantItems" Type="Self.RestaurantItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__Owner__151B244E">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="RestaurantGroups" Type="Self.RestaurantGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantGroups">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__Resta__1DB06A4F">
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="1" />
+          <End Role="RestaurantItems" Type="Self.RestaurantItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantItems">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__Stock__1F98B2C1">
+          <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
+          <End Role="RestaurantItems" Type="Self.RestaurantItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RestaurantItems">
+              <PropertyRef Name="StockCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ScheduleD__Perso__02FC7413">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="ScheduleDays" Type="Self.ScheduleDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduleDays">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlertItemAlert">
+          <End Role="Alerts" Type="Self.Alerts" Multiplicity="1" />
+          <End Role="ItemAlerts" Type="Self.ItemAlerts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alerts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemAlerts">
+              <PropertyRef Name="AlertId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonIdAlert">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="Alerts" Type="Self.Alerts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Alerts">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserProfile">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfiles">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantGroupRestaurant">
+          <End Role="RestaurantGroups" Type="Self.RestaurantGroups" Multiplicity="1" />
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Restaurants">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantItemItemAlert">
+          <End Role="RestaurantItems" Type="Self.RestaurantItems" Multiplicity="1" />
+          <End Role="ItemAlerts" Type="Self.ItemAlerts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemAlerts">
+              <PropertyRef Name="RestaurantItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockItemAlert">
+          <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
+          <End Role="ItemAlerts" Type="Self.ItemAlerts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="ItemAlerts">
+              <PropertyRef Name="StockCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfileRestaurant">
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CapstoneDBModelStoreContainer">
+          <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemAlerts" EntityType="Self.ItemAlerts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantGroups" EntityType="Self.RestaurantGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantItems" EntityType="Self.RestaurantItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurants" EntityType="Self.Restaurants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScheduleDays" EntityType="Self.ScheduleDays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Restauran__ItemI__1EA48E88" Association="Self.FK__Restauran__ItemI__1EA48E88">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="RestaurantItems" EntitySet="RestaurantItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__Owner__151B244E" Association="Self.FK__Restauran__Owner__151B244E">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="RestaurantGroups" EntitySet="RestaurantGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__Resta__1DB06A4F" Association="Self.FK__Restauran__Resta__1DB06A4F">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="RestaurantItems" EntitySet="RestaurantItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__Stock__1F98B2C1" Association="Self.FK__Restauran__Stock__1F98B2C1">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="RestaurantItems" EntitySet="RestaurantItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ScheduleD__Perso__02FC7413" Association="Self.FK__ScheduleD__Perso__02FC7413">
+            <End Role="People" EntitySet="People" />
+            <End Role="ScheduleDays" EntitySet="ScheduleDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlertItemAlert" Association="Self.FK_AlertItemAlert">
+            <End Role="Alerts" EntitySet="Alerts" />
+            <End Role="ItemAlerts" EntitySet="ItemAlerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonIdAlert" Association="Self.FK_PersonIdAlert">
+            <End Role="People" EntitySet="People" />
+            <End Role="Alerts" EntitySet="Alerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserProfile" Association="Self.FK_PersonUserProfile">
+            <End Role="People" EntitySet="People" />
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantGroupRestaurant" Association="Self.FK_RestaurantGroupRestaurant">
+            <End Role="RestaurantGroups" EntitySet="RestaurantGroups" />
+            <End Role="Restaurants" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantItemItemAlert" Association="Self.FK_RestaurantItemItemAlert">
+            <End Role="RestaurantItems" EntitySet="RestaurantItems" />
+            <End Role="ItemAlerts" EntitySet="ItemAlerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockItemAlert" Association="Self.FK_StockItemAlert">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="ItemAlerts" EntitySet="ItemAlerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileRestaurant" Association="Self.FK_UserProfileRestaurant">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CapstoneDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RestaurantItems" Relationship="CapstoneDBModel.FK__Restauran__ItemI__1EA48E88" FromRole="Item" ToRole="RestaurantItem" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ItemAlerts" Relationship="CapstoneDBModel.FK_StockItemAlert" FromRole="Stock" ToRole="ItemAlert" />
+          <NavigationProperty Name="RestaurantItems" Relationship="CapstoneDBModel.FK__Restauran__Stock__1F98B2C1" FromRole="Stock" ToRole="RestaurantItem" />
+        </EntityType>
+        <EntityContainer Name="CapstoneDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <EntitySet Name="UserProfiles" EntityType="CapstoneDBModel.UserProfile" />
+          <EntitySet Name="RestaurantGroups" EntityType="CapstoneDBModel.RestaurantGroup" />
+          <AssociationSet Name="FK__Restauran__Owner__151B244E" Association="CapstoneDBModel.FK__Restauran__Owner__151B244E">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="RestaurantGroup" EntitySet="RestaurantGroups" />
+          </AssociationSet>
+          <EntitySet Name="Restaurants" EntityType="CapstoneDBModel.Restaurant" />
+          <AssociationSet Name="FK_RestaurantGroupRestaurant" Association="CapstoneDBModel.FK_RestaurantGroupRestaurant">
+            <End Role="RestaurantGroup" EntitySet="RestaurantGroups" />
+            <End Role="Restaurant" EntitySet="Restaurants" />
+          </AssociationSet>
+          <EntitySet Name="People" EntityType="CapstoneDBModel.Person" />
+          <AssociationSet Name="FK_PersonUserProfile" Association="CapstoneDBModel.FK_PersonUserProfile">
+            <End Role="Person" EntitySet="People" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileRestaurant" Association="CapstoneDBModel.FK_UserProfileRestaurant">
+            <End Role="Restaurant" EntitySet="Restaurants" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <EntitySet Name="ItemAlerts" EntityType="CapstoneDBModel.ItemAlert" />
+          <EntitySet Name="RestaurantItems" EntityType="CapstoneDBModel.RestaurantItem" />
+          <AssociationSet Name="FK_RestaurantItemItemAlert" Association="CapstoneDBModel.FK_RestaurantItemItemAlert">
+            <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+            <End Role="ItemAlert" EntitySet="ItemAlerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockItemAlert" Association="CapstoneDBModel.FK_StockItemAlert">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="ItemAlert" EntitySet="ItemAlerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__ItemI__1EA48E88" Association="CapstoneDBModel.FK__Restauran__ItemI__1EA48E88">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__Resta__1DB06A4F" Association="CapstoneDBModel.FK__Restauran__Resta__1DB06A4F">
+            <End Role="Restaurant" EntitySet="Restaurants" />
+            <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__Stock__1F98B2C1" Association="CapstoneDBModel.FK__Restauran__Stock__1F98B2C1">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+          </AssociationSet>
+          <EntitySet Name="ScheduleDays" EntityType="CapstoneDBModel.ScheduleDay" />
+          <AssociationSet Name="FK__ScheduleD__Perso__02FC7413" Association="CapstoneDBModel.FK__ScheduleD__Perso__02FC7413">
+            <End Role="Person" EntitySet="People" />
+            <End Role="ScheduleDay" EntitySet="ScheduleDays" />
+          </AssociationSet>
+          <EntitySet Name="Alerts" EntityType="CapstoneDBModel.Alert" />
+          <AssociationSet Name="FK_AlertItemAlert" Association="CapstoneDBModel.FK_AlertItemAlert">
+            <End Role="Alert" EntitySet="Alerts" />
+            <End Role="ItemAlert" EntitySet="ItemAlerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonIdAlert" Association="CapstoneDBModel.FK_PersonIdAlert">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Alert" EntitySet="Alerts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="isOwner" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RestaurantGroups" Relationship="CapstoneDBModel.FK__Restauran__Owner__151B244E" FromRole="UserProfile" ToRole="RestaurantGroup" />
+          <NavigationProperty Name="Person" Relationship="CapstoneDBModel.FK_PersonUserProfile" FromRole="UserProfile" ToRole="Person" />
+        </EntityType>
+        <EnumType Name="DayOfWeek" a:ExternalTypeName="System.DayOfWeek" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="RestaurantGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OwnerId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OwnerProfile" Relationship="CapstoneDBModel.FK__Restauran__Owner__151B244E" FromRole="RestaurantGroup" ToRole="UserProfile" />
+          <NavigationProperty Name="Restaurants" Relationship="CapstoneDBModel.FK_RestaurantGroupRestaurant" FromRole="RestaurantGroup" ToRole="Restaurant" />
+        </EntityType>
+        <Association Name="FK__Restauran__Owner__151B244E">
+          <End Type="CapstoneDBModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="CapstoneDBModel.RestaurantGroup" Role="RestaurantGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantGroup">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneNum" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="LocationName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RestaurantGroup" Relationship="CapstoneDBModel.FK_RestaurantGroupRestaurant" FromRole="Restaurant" ToRole="RestaurantGroup" />
+          <NavigationProperty Name="People" Relationship="CapstoneDBModel.FK_UserProfileRestaurant" FromRole="Restaurant" ToRole="Person" />
+          <NavigationProperty Name="RestaurantItems" Relationship="CapstoneDBModel.FK__Restauran__Resta__1DB06A4F" FromRole="Restaurant" ToRole="RestaurantItem" />
+        </EntityType>
+        <Association Name="FK_RestaurantGroupRestaurant">
+          <End Type="CapstoneDBModel.RestaurantGroup" Role="RestaurantGroup" Multiplicity="1" />
+          <End Type="CapstoneDBModel.Restaurant" Role="Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int32" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNum" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="BalanceOwed" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="UserProfiles" Relationship="CapstoneDBModel.FK_PersonUserProfile" FromRole="Person" ToRole="UserProfile" />
+          <NavigationProperty Name="Restaurant" Relationship="CapstoneDBModel.FK_UserProfileRestaurant" FromRole="Person" ToRole="Restaurant" />
+          <NavigationProperty Name="ScheduleDays" Relationship="CapstoneDBModel.FK__ScheduleD__Perso__02FC7413" FromRole="Person" ToRole="ScheduleDay" />
+          <NavigationProperty Name="Alerts" Relationship="CapstoneDBModel.FK_PersonIdAlert" FromRole="Person" ToRole="Alert" />
+        </EntityType>
+        <Association Name="FK_PersonUserProfile">
+          <End Type="CapstoneDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="CapstoneDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfileRestaurant">
+          <End Type="CapstoneDBModel.Restaurant" Role="Restaurant" Multiplicity="0..1" />
+          <End Type="CapstoneDBModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ItemAlert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlertId" Type="Int32" Nullable="false" />
+          <Property Name="RestaurantItemId" Type="Int32" Nullable="false" />
+          <Property Name="StockCode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RestaurantItem" Relationship="CapstoneDBModel.FK_RestaurantItemItemAlert" FromRole="ItemAlert" ToRole="RestaurantItem" />
+          <NavigationProperty Name="Stock" Relationship="CapstoneDBModel.FK_StockItemAlert" FromRole="ItemAlert" ToRole="Stock" />
+          <NavigationProperty Name="Alert" Relationship="CapstoneDBModel.FK_AlertItemAlert" FromRole="ItemAlert" ToRole="Alert" />
+        </EntityType>
+        <EntityType Name="RestaurantItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="StockCode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ItemAlerts" Relationship="CapstoneDBModel.FK_RestaurantItemItemAlert" FromRole="RestaurantItem" ToRole="ItemAlert" />
+          <NavigationProperty Name="Item" Relationship="CapstoneDBModel.FK__Restauran__ItemI__1EA48E88" FromRole="RestaurantItem" ToRole="Item" />
+          <NavigationProperty Name="Restaurant" Relationship="CapstoneDBModel.FK__Restauran__Resta__1DB06A4F" FromRole="RestaurantItem" ToRole="Restaurant" />
+          <NavigationProperty Name="Stock" Relationship="CapstoneDBModel.FK__Restauran__Stock__1F98B2C1" FromRole="RestaurantItem" ToRole="Stock" />
+        </EntityType>
+        <Association Name="FK_RestaurantItemItemAlert">
+          <End Type="CapstoneDBModel.RestaurantItem" Role="RestaurantItem" Multiplicity="1" />
+          <End Type="CapstoneDBModel.ItemAlert" Role="ItemAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemAlert">
+              <PropertyRef Name="RestaurantItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockItemAlert">
+          <End Type="CapstoneDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="CapstoneDBModel.ItemAlert" Role="ItemAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="ItemAlert">
+              <PropertyRef Name="StockCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__ItemI__1EA48E88">
+          <End Type="CapstoneDBModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="CapstoneDBModel.RestaurantItem" Role="RestaurantItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantItem">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__Resta__1DB06A4F">
+          <End Type="CapstoneDBModel.Restaurant" Role="Restaurant" Multiplicity="1" />
+          <End Type="CapstoneDBModel.RestaurantItem" Role="RestaurantItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RestaurantItem">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__Stock__1F98B2C1">
+          <End Type="CapstoneDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="CapstoneDBModel.RestaurantItem" Role="RestaurantItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RestaurantItem">
+              <PropertyRef Name="StockCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ScheduleDay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="DayOfWeek" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <NavigationProperty Name="Person" Relationship="CapstoneDBModel.FK__ScheduleD__Perso__02FC7413" FromRole="ScheduleDay" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK__ScheduleD__Perso__02FC7413">
+          <End Type="CapstoneDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="CapstoneDBModel.ScheduleDay" Role="ScheduleDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduleDay">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Alert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="TimeCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeResponded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ItemAlerts" Relationship="CapstoneDBModel.FK_AlertItemAlert" FromRole="Alert" ToRole="ItemAlert" />
+          <NavigationProperty Name="Person" Relationship="CapstoneDBModel.FK_PersonIdAlert" FromRole="Alert" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_AlertItemAlert">
+          <End Type="CapstoneDBModel.Alert" Role="Alert" Multiplicity="1" />
+          <End Type="CapstoneDBModel.ItemAlert" Role="ItemAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alert">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemAlert">
+              <PropertyRef Name="AlertId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonIdAlert">
+          <End Type="CapstoneDBModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="CapstoneDBModel.Alert" Role="Alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Alert">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CapstoneDBModelStoreContainer" CdmEntityContainer="CapstoneDBEntities">
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="CapstoneDBModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="CapstoneDBModel.Stock">
+              <MappingFragment StoreEntitySet="Stocks">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="CapstoneDBModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="isOwner" ColumnName="isOwner" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantGroups">
+            <EntityTypeMapping TypeName="CapstoneDBModel.RestaurantGroup">
+              <MappingFragment StoreEntitySet="RestaurantGroups">
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurants">
+            <EntityTypeMapping TypeName="CapstoneDBModel.Restaurant">
+              <MappingFragment StoreEntitySet="Restaurants">
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="CapstoneDBModel.Person">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="BalanceOwed" ColumnName="BalanceOwed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemAlerts">
+            <EntityTypeMapping TypeName="CapstoneDBModel.ItemAlert">
+              <MappingFragment StoreEntitySet="ItemAlerts">
+                <ScalarProperty Name="StockCode" ColumnName="StockCode" />
+                <ScalarProperty Name="RestaurantItemId" ColumnName="RestaurantItemId" />
+                <ScalarProperty Name="AlertId" ColumnName="AlertId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantItems">
+            <EntityTypeMapping TypeName="CapstoneDBModel.RestaurantItem">
+              <MappingFragment StoreEntitySet="RestaurantItems">
+                <ScalarProperty Name="StockCode" ColumnName="StockCode" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduleDays">
+            <EntityTypeMapping TypeName="CapstoneDBModel.ScheduleDay">
+              <MappingFragment StoreEntitySet="ScheduleDays">
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alerts">
+            <EntityTypeMapping TypeName="CapstoneDBModel.Alert">
+              <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="TimeResponded" ColumnName="TimeResponded" />
+                <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

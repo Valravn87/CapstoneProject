@@ -1,0 +1,401 @@
+/*
+	Citrusy by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
+
+body,input,textarea,select
+{
+	line-height: 1.75em;
+	font-size: 9pt;
+	letter-spacing: 0;
+}
+
+body
+{
+	padding-top: 44px;
+}
+
+h2, h3, h4, h5, h6
+{
+	font-size: 1.5em;
+}
+
+section,
+article
+{
+	clear: both;
+	margin: 2em 0 2em 0 !important;
+}
+
+section > :first-child,
+article > :first-child
+{
+	margin-top: 0 !important;
+}
+
+section:first-child,
+article:first-child
+{
+	margin-top: 0 !important;
+}
+
+/*********************************************************************************/
+/* UI                                                                            */
+/*********************************************************************************/
+
+#titleBar
+{
+	background: #181818;
+}
+
+	#titleBar .title a
+	{
+		display: block;
+		color: #fff;
+		text-align: center;
+		line-height: 44px;
+		text-decoration: none;
+		font-size: 1.6em;
+		font-weight: 700;
+	}
+	
+	#titleBar .title p
+	{
+		display: none;
+	}
+
+	#titleBar .toggle
+	{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 80px;
+		height: 60px;
+	}
+
+		#titleBar .toggle:before
+		{
+			content: '';
+			display: block;
+			width: 60px;
+			height: 40px;
+			border-radius: 4px;
+			position: absolute;
+			left: 5px;
+			top: 5px;
+			color: #FFF !important;
+		}
+
+		#titleBar .toggle:after
+		{
+			content: '';
+			display: block;
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			color: #FFF !important;
+			left: 15px;
+			top: 15px;
+			background: url('images/mobileUI-site-nav-opener-bg.svg') 0px 0px no-repeat;
+			opacity: 1;
+		}
+
+		#titleBar .toggle:active:after
+		{
+			opacity: 0.5;
+		}
+
+#navPanel
+{
+	background: #101214;
+	font-weight: 400;
+	text-transform: uppercase;
+	color: #888;
+	letter-spacing: 2px;
+	font-size: 1em;
+}
+
+	#navPanel .link
+	{
+		display: block;
+		color: #ddd;
+		text-decoration: none;
+		height: 44px;
+		line-height: 44px;
+		border: 0;
+		border-top: solid 1px #202122;
+		padding: 0 1em 0 1em;
+	}
+	
+		#navPanel .link:first-child
+		{
+			border-top: 0;
+		}
+		
+		#navPanel .link.depth-0
+		{
+			font-weight: 600;
+			color: #fff;
+		}
+
+		#navPanel .indent-1 { display: inline-block; width: 1em; }
+		#navPanel .indent-2 { display: inline-block; width: 2em; }
+		#navPanel .indent-3 { display: inline-block; width: 3em; }
+		#navPanel .indent-4 { display: inline-block; width: 4em; }
+		#navPanel .indent-5 { display: inline-block; width: 5em; }
+		#navPanel .depth-0 { color: #fff; }
+
+/* Page Wrapper */
+
+#wrapper
+{
+	padding-top: 3em;
+}
+
+#page {
+}
+
+#header
+{
+	display: none;
+}
+
+/* Banner */
+
+#banner {
+	overflow: hidden;
+}
+
+#banner .container {
+	padding: 1.87em 1.87em 1.87em 1.87em;
+	background: #FFFFFF;
+}
+
+#banner img {
+	border-radius: 5px;
+}
+
+
+#banner a img {
+	display: block;
+	width: 100%;
+}
+
+/* Content */
+
+#content {
+}
+
+#content h2 {
+	padding: 0em 0em 1em 0em;
+	text-transform: none;
+	font-size: 1.75em;
+	color: #2A2A2A;
+}
+
+#content img {
+	padding: 0em 0em 0.62em 0em;
+}
+
+#content a img {
+	display: block;
+	width: 100%;
+}
+
+#content .post {
+	padding: 0em 0em 1.87em 0em;
+}
+
+#content section {
+	padding: 0em 1.87em;
+}
+
+/* Sidebar1 */
+
+#sidebar1 {
+}
+
+#sidebar1 h2 {
+	padding: 1em 0em 1.5em 0em;
+	text-transform: none;
+	font-size: 1.75em;
+	color: #2A2A2A;
+}
+
+#sidebar1 img {
+}
+
+#sidebar1 a img {
+	display: block;
+	width: 100%;
+}
+
+#sidebar1 section {
+	padding: 0em 1.87em;
+}
+
+
+/* Sidebar2 */
+
+#sidebar2 {
+}
+
+#sidebar2 h2 {
+	padding: 1em 0em 1.5em 0em;
+	text-transform: none;
+	font-size: 1.75em;
+	color: #2A2A2A;
+}
+
+
+#sidebar2 section {
+	padding: 0em 1.87em;
+}
+
+
+#sidebar2 .sbox1 {
+	margin-bottom: 3.12em;
+}
+
+
+#sidebar2 .sbox2 {
+	margin-bottom: 3.12em;
+}
+
+#sidebar2 .sbox3 {
+}
+
+
+/** Footer Column Content */
+
+#footer-wrapper {
+}
+
+#footer-content {
+	overflow: hidden;
+	padding: 3.12em 0em;
+	color: #777777;
+}
+
+#footer-content h2 {
+	padding: 0em 0em 1.50em 0em;
+	text-transform: none;
+	font-size: 1.75em;
+	color: #3F3F3F;
+}
+
+#footer-content section {
+	padding: 0em 1.87em 2em 1.87em;
+}
+
+
+#footer-content #box1 {
+}
+
+#footer-content #box2 {
+}
+
+#footer-content #box3 {
+	overflow: hidden;
+}
+
+#footer-content a img {
+	display: block;
+	width: 100%;
+}
+
+
+
+/* Marketing */
+
+#marketing {
+	overflow: hidden;
+}
+
+#marketing .divider {
+}
+
+
+
+#marketing section {
+	padding: 0em 1.87em 1.87em 1.87em;
+}
+
+#marketing .title {
+	padding: 1.25em;
+	background: #181818;
+	border-radius: 5px 5px 0px 0px;
+	text-transform: none;
+	font-size: 1.25em;
+	color: #FFFFFF;
+}
+
+#marketing .subtitle {
+	padding-bottom: 1em;
+	font-weight: bold;
+	color: #838383;
+}
+
+
+#marketing .mbox-style {
+	background: #333333;
+	border-radius: 5px;
+}
+
+#marketing .mbox-style .content {
+	padding: 2em 1.5em 1em 1.5em;
+	text-shadow: 1px 1px 1px #212121;
+}
+/* Featured */
+
+#featured-area {
+	overflow: hidden;
+	margin-bottom: 1.87em;
+	padding: 0em 0em 1.87em 0em;
+	border-bottom: 1px solid #D4D6D8;
+}
+
+#featured-area section {
+	padding: 0em 1.25em 1.25em 1.25em;
+}
+
+#featured-area .box-style {
+	overflow: hidden;
+	padding: 1.56em;
+}
+
+#featured-area .box-style h3 {
+	padding: 0em 0em 1.25em 0em;
+	font-size: 1.2em;
+	color: #171717;
+}
+
+#featured-area .box-style img {
+	float: left;
+	margin-right: 1.56em;
+}
+
+
+#featured-area .box-style a img {
+	display: block;
+	width: 40%;
+}
+
+/* Copyright */
+
+#copyright {
+	overflow: hidden;
+	padding: 1.87em 0em;
+}
+
+#copyright p {
+	text-align: center;
+}
+
+
+ul.style5 a img {
+	display: block;
+	width: 100%;
+}
+
