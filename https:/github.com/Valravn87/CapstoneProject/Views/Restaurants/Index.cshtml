@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CapstoneProject.Models.ViewModels.RestaurantVM>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>My Restaurants</h2>
+
+<p>
+	<h3>@Html.ActionLink("Create New", "Create")</h3>
+</p>
+<br />
+@foreach (var item in Model)
+{
+	<button class="accordion">@Html.DisplayFor(modelItem => item.Name)</button>
+	<div class="panel">
+		@Html.Action("_DetailsPane", "Restaurants", new { id = item.Id })
+	</div>
+}
+
+@section Scripts {
+	<script src="~/Scripts/accordion.js"></script>
+}
+

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML>
+<!--
+	Citrusy by TEMPLATED
+	templated.co
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+<head>
+	<title>68</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+	<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script>
+		window._skel_config = {
+			prefix: '/css/style',
+		};
+	</script>
+	<script src="~/js/skel.min.js"></script>
+	<script src="~/js/skel-panels.min.js"></script>
+	<script src="~/js/init.js"></script>
+	<script src="~/Scripts/jquery.mask.min.js"></script>
+	@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+	<link href="~/TimePicker/bootstrap-timepicker.css" rel="stylesheet" />
+	<link href="~/TimePicker/MvcBootstrapTimepicker.css" rel="stylesheet" />
+	<link href='https://fonts.googleapis.com/css?family=Sedgwick Ave Display' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Underdog' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Fruktur' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Rye' rel='stylesheet'>
+	<noscript>
+		<link rel="stylesheet" href="~/css/skel-noscript.css" />
+		<link rel="stylesheet" href="~/css/style.css" />
+		<link rel="stylesheet" href="~/css/style-desktop.css" />
+	</noscript>
+	<!--For Accordion Panel: -->
+	@*@Styles.Render("~/Content/css")*@
+	@Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="homepage">
+	<div id="header-wrapper">
+		<div id="header">
+			<div class="container">
+				<div id="logo">
+					<!-- Logo -->
+					<h1>@Html.ActionLink("68","Index","Home")</h1>
+					<p>An Inventory Solution</p>
+				</div>
+			</div>
+			<div class="container">
+				@Html.Partial("_NavPartial")
+			</div>
+		</div>
+	</div>
+	<div id="wrapper">
+		@RenderBody()
+	</div>
+	<div id="footer-wrapper">
+		<div class="container">
+			<div class="row" id="footer-content">
+			</div>
+		</div>
+	</div>
+	<div>
+		<div class="container" id="copyright">
+			&copy2019 Conrad Arthur
+		</div>
+	</div>
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+	<script src="~/Scripts/inputmask.js"></script>
+</body>
+</html>

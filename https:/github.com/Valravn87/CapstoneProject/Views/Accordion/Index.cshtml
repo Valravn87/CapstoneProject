@@ -1,0 +1,114 @@
+﻿
+@{
+	/**/
+
+	/**/
+
+	ViewBag.Title = "Index";
+}
+
+<h2>Accordion</h2>
+
+<button class="accordion">
+	<tr class="accordion">
+		<td>
+			Mission Taco Joint - Historic Soulard
+		</td>
+		<td>
+			908 Lafayette Ave
+		</td>
+		<td>
+			St. Louis, MO
+		</td>
+		<td>
+			63104
+		</td>
+		<td>
+			317-457-4982
+		</td>
+		<td></td>
+	</tr>
+
+</button>
+<div class="panel">
+	<dl class="dl-horizontal">
+		<dt>
+			City/State
+		</dt>
+
+		<dd>
+			St. Louis, MO
+		</dd>
+
+		<dt>
+			Address
+		</dt>
+
+		<dd>
+			908 Lafayette Ave
+		</dd>
+
+		<dt>
+			Zip Code
+		</dt>
+
+		<dd>
+			63104
+		</dd>
+
+		<dt>
+			Phone Number
+		</dt>
+
+		<dd>
+			317-457-4982
+		</dd>
+
+		<dt>
+			Managers
+		</dt>
+
+		<ul>
+
+			<li>George Costanza</li>
+			<li>Bill Que</li>
+		</ul>
+	</dl>
+	<div class="links-box">
+		<div class="links-sub-box">
+			<h3><a href="/Restaurants/Edit/11">Edit</a></h3>
+			<h3><a href="/Restaurants/Details/11">Details</a></h3>
+		</div>
+		<div class="links-sub-box">
+			<h3><a href="/Restaurants/Delete/11">Delete</a></h3>
+			<h3><a href="/Account/RegisterManager/11?name=Mission%20Taco%20Joint%20-%20Historic%20Soulard">Add Manager</a></h3>
+		</div>
+	</div>
+</div>
+
+<button class="accordion">Section 2</button>
+<div class="panel">
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">Section 3</button>
+<div class="panel">
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<script>
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+		acc[i].addEventListener("click", function () {
+			this.classList.toggle("active");
+			var panel = this.nextElementSibling;
+			if (panel.style.display === "block") {
+				panel.style.display = "none";
+			} else {
+				panel.style.display = "block";
+			}
+		});
+	}
+</script>

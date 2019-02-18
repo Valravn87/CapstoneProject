@@ -1,0 +1,91 @@
+﻿@model CapstoneProject.Models.Person
+
+@{
+	ViewBag.Title = "Details";
+}
+
+<div>
+	<h2>@Html.DisplayFor(model => model.Name)</h2>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.FirstName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.FirstName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.LastName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.LastName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.PhoneNum)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.PhoneNum)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.BalanceOwed)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.BalanceOwed)
+		</dd>
+
+		@{
+			var rvm = new CapstoneProject.Models.ViewModels.RestaurantVM(Model.Restaurant);
+			<dt>Restaurant</dt>
+			<dd>@rvm.Name</dd>
+		}
+	</dl>
+</div>
+@*<p>
+	<div class="links-box">
+	<div class="links-sub-box">
+		<h3>@Html.ActionLink("Edit", "Edit", new { id = Model.Id}, htmlAttributes: new { @class = "fixed-width-link"})</h3>
+		<h3>@Html.ActionLink("Details", "Details", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+	</div>
+	<div class="links-sub-box">
+		<h3>@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+		<h3>@Html.ActionLink("Add Manager", "RegisterManager", "Account", new { id = Model.Id, name = Model.Name }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+	</div>
+</div>) |
+	@Html.ActionLink("Add to Balance", "AddToBalance", new { id = Model.Id }) |
+	@Html.ActionLink("Pay off Balance", "PayOffBalance", new { id = Model.Id }) |
+	@Html.ActionLink("Back", "Details", "Restaurants", new { id = Model.RestaurantId }, null)
+</p>*@
+<div class="links-box">
+	<div class="links-sub-box">
+		<h3>@Html.ActionLink("Edit", "Edit", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+		<h3>@Html.ActionLink("Back", "Details", "Restaurants", new { id = Model.RestaurantId }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+	</div>
+	<div class="links-sub-box">
+		<h3>@Html.ActionLink("Add to Balance", "AddToBalance", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link2" })</h3>
+		<h3>@Html.ActionLink("Pay off Balance", "PayOffBalance", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link2" })</h3>
+	</div>
+</div>
+
+<button class="accordion">Schedule</button>
+<div class="panel">
+	@Html.Action("_DetailsPane", "ScheduleDays", new { id = Model.Id })
+</div>
+
+@section Scripts {
+	<script src="~/Scripts/accordion.js"></script>
+}

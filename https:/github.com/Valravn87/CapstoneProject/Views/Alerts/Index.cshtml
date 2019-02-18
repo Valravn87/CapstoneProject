@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CapstoneProject.Models.Alert>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{ 
+	string name = ViewBag.RestaurantName;
+}
+<h4>Alerts for</h4>
+<h2>@Html.ActionLink(name, "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)</h2>
+<hr />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeResponded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Responder)
+        </th>
+		<th>
+			@Html.DisplayNameFor(model => model.NumRedItems)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.NumYellowItems)
+		</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeResponded)
+        </td>
+        <td>
+			@if (item.Person != null && item.Person.Restaurant != null)
+			{
+				@Html.ActionLink(item.Responder, "Details", "Employees", new { id = item.PersonId }, null)
+			}
+			else
+			{
+				@Html.DisplayFor(modelItem => item.Responder)
+			}
+        </td>
+		<td>
+			@Html.DisplayFor(modelItem => item.NumRedItems)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.NumYellowItems)
+		</td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            <a href="~/Alerts/Delete/@(item.Id)">
+				<img src="~/css/images/close.png" class="x-delete"/>
+			</a>	
+        </td>
+    </tr>
+}
+
+</table>
+<hr />
+<h3>@Html.ActionLink("Back", "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)</h3>

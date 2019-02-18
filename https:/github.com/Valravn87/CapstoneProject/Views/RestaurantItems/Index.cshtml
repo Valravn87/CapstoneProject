@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CapstoneProject.Models.RestaurantItem>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+@{
+	string header = ViewBag.RestaurantName;
+}
+<h4>Inventory for</h4>
+<h2>@Html.ActionLink(header, "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)</h2>
+
+
+	<h3>@Html.ActionLink("Add New Inventory Item", "Create", new { id = ViewBag.RestaurantId })</h3>
+	<hr />
+	<div class="container-inventory">
+		<table class="table table-inventory">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Item.Name)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Stock.Level)
+				</th>
+				<th></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+				<tr class="@("item-row" + item.StockCode)" id=@("item-id-row" + item.Id)>
+					<td>
+						@Html.DisplayFor(modelItem => item.Item.Name)
+					</td>
+					<td>
+						<select id="@("new-stock" + item.Id)" onchange="StockLevelChanged(@(item.Id))">
+							@foreach (CapstoneProject.Models.Stock stock in ViewBag.AllStocks)
+							{
+								<option value="@(stock.Code)" @((stock.Code == item.StockCode) ? "selected" : "")>@(stock.Level)</option>
+							}
+						</select>
+					</td>
+					<td>
+						<a href="~/RestaurantItems/Delete/@(item.Id)">
+							<img src="~/css/images/close.png" class="x-delete"/>
+						</a>					
+					</td>
+				</tr>
+			}
+
+		</table>
+		<div class="alert-post">
+			@Html.Action("PostAlert", "Alerts", new { id = ViewBag.RestaurantId })
+		</div>
+		<div class="alert-post">
+			@Html.Action("PostAlertBoth", "Alerts", new { id = ViewBag.RestaurantId })
+		</div>
+	</div>
+<div class="bottom-inventory">
+	<hr />
+	<h3>@Html.ActionLink("Back", "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)</h3>
+</div>
+
+@section Scripts{
+	<script src="~/Scripts/stockchange.js"></script>}

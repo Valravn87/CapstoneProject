@@ -1,0 +1,58 @@
+﻿@model CapstoneProject.Models.ViewModels.RestaurantVM
+
+<dl class="dl-horizontal">
+	<dt>
+		@Html.DisplayNameFor(model => model.CityState)
+	</dt>
+
+	<dd>
+		@Html.DisplayFor(model => model.CityState)
+	</dd>
+
+	<dt>
+		@Html.DisplayNameFor(model => model.Address)
+	</dt>
+
+	<dd>
+		@Html.DisplayFor(model => model.Address)
+	</dd>
+
+	<dt>
+		@Html.DisplayNameFor(model => model.ZipCode)
+	</dt>
+
+	<dd>
+		@Html.DisplayFor(model => model.ZipCode)
+	</dd>
+
+	<dt>
+		@Html.DisplayNameFor(model => model.PhoneNum)
+	</dt>
+
+	<dd>
+		@Html.DisplayFor(model => model.PhoneNum)
+	</dd>
+
+	<dt>
+		Managers
+	</dt>
+
+	<ul>
+
+		@foreach (var manager in ViewBag.Managers)
+		{
+			string managerName = manager.Person.Name;
+			@:<li>@Html.ActionLink(managerName, "Details","Employees", new { id = manager.PersonId }, null)</li>
+		}
+	</ul>
+</dl>
+<div class="links-box">
+	<div class="links-sub-box">
+		<h3>@Html.ActionLink("Edit", "Edit", new { id = Model.Id}, htmlAttributes: new { @class = "fixed-width-link"})</h3>
+		<h3>@Html.ActionLink("Details", "Details", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+	</div>
+	<div class="links-sub-box">
+		<h3>@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+		<h3>@Html.ActionLink("Add Manager", "RegisterManager", "Account", new { id = Model.Id, name = Model.Name }, htmlAttributes: new { @class = "fixed-width-link" })</h3>
+	</div>
+</div>

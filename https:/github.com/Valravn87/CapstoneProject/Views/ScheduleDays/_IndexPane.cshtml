@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CapstoneProject.Models.ViewModels.EmployeeScheduleVM>
+
+@{
+	/**/
+
+	ViewBag.Title = "Index";
+}
+
+
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Name)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.SundayStart)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.MondayStart)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.TuesdayStart)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.WednesdayStart)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.ThursdayStart)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.FridayStart)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.SaturdayStart)
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr class="@(item.IsManager ? "manager-row" : "")">
+			<td>
+				@Html.DisplayFor(modelItem => item.Name)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.SundayStart)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.MondayStart)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.TuesdayStart)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.WednesdayStart)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.ThursdayStart)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.FridayStart)
+			</td>
+			<td>
+				@Html.DisplayFor(modeItem => item.SaturdayStart)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "EditSchedule", new { id = item.EmployeeId })
+			</td>
+		</tr>
+	}
+
+</table>

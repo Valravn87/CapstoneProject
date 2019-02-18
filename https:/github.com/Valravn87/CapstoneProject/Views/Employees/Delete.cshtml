@@ -1,0 +1,28 @@
+﻿@model CapstoneProject.Models.Person
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Are you sure you want to remove this employee?</h3>
+<div>
+	<h2>@Html.DisplayFor(model => model.Name)</h2>
+    <hr />
+	<dl class="dl-horizontal">
+		@{
+			var rvm = new CapstoneProject.Models.ViewModels.RestaurantVM(Model.Restaurant);
+			<dt>Restaurant</dt>
+			<dd>@rvm.Name</dd>
+		}
+
+	</dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+	<div class="form-actions no-color">
+		<input type="submit" value="Delete" class="btn btn-default" /> |
+		@Html.ActionLink("Back", "Details", "Restaurants", new { id = Model.RestaurantId }, null)
+	</div>
+    }
+</div>

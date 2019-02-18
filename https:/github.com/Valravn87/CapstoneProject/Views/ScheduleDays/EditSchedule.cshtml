@@ -1,0 +1,109 @@
+﻿@using MvcBootstrapTimepicker;
+@model CapstoneProject.Models.ViewModels.EmployeeScheduleVM
+
+@{
+	ViewBag.Title = "EditSchedule";
+}
+
+<h4>EditSchedule</h4>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	@Html.HiddenFor(model => model.EmployeeId)
+	@Html.HiddenFor(model => model.Name)
+
+	<div class="form-horizontal">
+		<h2>@Html.DisplayFor(model => model.Name)</h2>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.SundayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.SundayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.SundayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.MondayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.MondayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.MondayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.TuesdayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.TuesdayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.TuesdayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.WednesdayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.WednesdayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.WednesdayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.ThursdayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.ThursdayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.ThursdayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.FridayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.FridayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.FridayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.SaturdayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.BootstrapTimePickerFor(model => model.SaturdayStart).AMPM(true)
+				@Html.ValidationMessageFor(model => model.SaturdayStart, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-default" /> |
+				@Html.ActionLink("Back", "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)
+			</div>
+		</div>
+	</div>
+}
+
+@section Scripts {
+	<script src="~/TimePicker/bootstrap-timepicker.js"></script>
+	<script src="~/TimePicker/MvcBootstrapTimepicker.js"></script>
+	@Scripts.Render("~/bundles/jqueryval")
+	@*<script>
+		$(document).ready(function ($) {
+			var timeSlots = $("input.form-control");
+			for (var i = 0; i < timeSlots.length; i++) {
+				timeSlots[i].inputMask(
+					{
+						alias: "datetime",
+						placeholder: "12:00 AM",
+						inputFormat: "hh:MM TT",
+						insertMode: false,
+						showMaskOnHover: false,
+						hourFormat: 12
+					})
+				//timeSlots[i].mask("hh:MM TT");
+			}
+		});
+
+	</script>*@
+}

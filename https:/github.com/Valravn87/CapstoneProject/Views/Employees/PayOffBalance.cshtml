@@ -1,0 +1,43 @@
+﻿@model CapstoneProject.Models.ViewModels.EmployeeBalanceVM
+
+@{
+	ViewBag.Title = "PayOffBalance";
+}
+
+<h4>Pay off balance for</h4>
+<h2>@Html.DisplayFor(model => model.EmployeeName)</h2>
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmployeeId)
+		@Html.HiddenFor(model => model.BalanceOwed)
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.BalanceOwed, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.DisplayFor(model => model.BalanceOwed, new { htmlAttributes = new { @class = "form-control" } })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.ReimburseAmt, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.ReimburseAmt, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.ReimburseAmt, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Update" class="btn btn-default" /> |
+				@Html.ActionLink("Back", "Details", new { id = Model.EmployeeId })
+			</div>
+		</div>
+	</div>
+}
+
+

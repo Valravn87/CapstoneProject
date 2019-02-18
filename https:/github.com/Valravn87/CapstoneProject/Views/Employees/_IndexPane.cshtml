@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CapstoneProject.Models.Person>
+
+@{
+	/**/
+
+	ViewBag.Title = "Index";
+}
+
+
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Name)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.PhoneNum)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Email)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.BalanceOwed)
+		</th>
+		<th>
+			Manager
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr class="@(item.UserProfiles.Any() ? "manager-row" : "")">
+			<td>
+				@Html.DisplayFor(modelItem => item.Name)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.PhoneNum)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Email)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.BalanceOwed)
+			</td>
+			<td>
+				@if (item.UserProfiles.Any())
+				{
+					@:Yes
+				}
+				else
+				{
+					@:No
+				}
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+				@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+				@*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+				<a href="~/Employees/Delete/@(item.Id)">
+					<img src="~/css/images/close.png" class="x-delete" />
+				</a>
+			</td>
+		</tr>
+	}
+</table>
+<hr />
+<h3>@Html.ActionLink("Add Employee", "Create", new { id = ViewBag.RestaurantId })</h3>
+	
+

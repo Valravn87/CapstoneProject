@@ -1,0 +1,102 @@
+﻿@using Microsoft.AspNet.Identity
+@using CapstoneProject.Models
+
+
+<nav id="nav">
+	<div id="nav-left">
+		@if (Request.IsAuthenticated)
+		{
+			using (var db = new CapstoneDBEntities())
+			{
+				if (User.IsInRole("owner"))
+				{
+					var ownerID = User.Identity.GetUserId();
+					var restaurants = db.Restaurants
+						.Where(x => x.RestaurantGroup.OwnerId == ownerID).ToList()
+						.Select(x => new CapstoneProject.Models.ViewModels.RestaurantVM(x));
+		<ul>
+			<li>
+				<div class="dropdown">
+					<div class="dropdown-header">Restaurants</div>
+					<ul class="dropdown-content">
+						<li>@Html.ActionLink("(View All)", "Index", "Restaurants", null, htmlAttributes: new { @class = "view-all"})</li>
+						@foreach (var restaurant in restaurants)
+						{
+							<li>@Html.ActionLink(restaurant.Name, "Details", "Restaurants", new { id = restaurant.Id}, null)</li>
+						}
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="dropdown">
+					<div class="dropdown-header">Employees</div>
+					<ul class="dropdown-content">
+						@foreach (var restaurant in restaurants)
+						{
+							<li>@Html.ActionLink(restaurant.Name, "Index", "Employees", new { id = restaurant.Id }, null)</li>
+						}
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="dropdown">
+					<div class="dropdown-header">Inventories</div>
+					<ul class="dropdown-content">
+						@foreach (var restaurant in restaurants)
+						{
+						<li>@Html.ActionLink(restaurant.Name, "Index", "RestaurantItems", new { id = restaurant.Id }, null)</li>
+						}
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="dropdown">
+					<div class="dropdown-header">Schedules</div>
+					<ul class="dropdown-content">
+						@foreach (var restaurant in restaurants)
+						{
+							<li>@Html.ActionLink(restaurant.Name, "Index", "ScheduleDays", new { id = restaurant.Id }, null)</li>
+						}
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="dropdown">
+					<div class="dropdown-header">Alerts</div>
+					<ul class="dropdown-content">
+						@foreach (var restaurant in restaurants)
+						{
+							<li>@Html.ActionLink(restaurant.Name, "Index", "Alerts", new { id = restaurant.Id }, null)</li>
+						}
+					</ul>
+				</div>
+			</li>
+		</ul>
+				}
+				else
+				{
+					var managerID = User.Identity.GetUserId();
+					var manager = db.UserProfiles.Find(managerID);
+					var person = manager.Person;
+					<ul>
+						<li>@Html.ActionLink("Restaurant", "Index", "Restaurants")</li>
+						<li>@Html.ActionLink("Employees", "Index", "Employees", new { id = person.RestaurantId }, null)</li>
+						<li>@Html.ActionLink("Inventory", "Index", "RestaurantItems", new { id = person.RestaurantId }, null)</li>
+						<li>@Html.ActionLink("Schedule", "Index", "ScheduleDays", new { id = person.RestaurantId }, null)</li>
+						<li>@Html.ActionLink("Alerts", "Index", "Alerts", new { id = person.RestaurantId }, null)</li>
+					</ul>
+				}
+			}
+		}
+		else
+		{
+			<ul>
+				<li>@Html.ActionLink("Home", "Index", "Home")</li>
+			</ul>
+		}
+	</div>
+	
+	<div id="nav-right">
+		@Html.Partial("_LoginPartial")
+	</div>
+</nav>

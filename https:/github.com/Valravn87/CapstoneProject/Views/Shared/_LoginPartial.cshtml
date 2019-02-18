@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+	using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"/*, @class = "navbar-right" */}))
+	{
+		@Html.AntiForgeryToken()
+
+<div class="dropdown">
+	@using (var db = new CapstoneProject.Models.CapstoneDBEntities())
+	{
+		var userId = User.Identity.GetUserId();
+		var userProfile = db.UserProfiles.Find(userId);
+		var name = db.People.Find(userProfile.PersonId).FirstName;
+		<div class="dropdown-header">@name</div>
+	}
+	<ul class="dropdown-content">
+		<li>
+			@Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+		</li>
+		<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+	</ul>
+</div>
+
+	}
+}
+else
+{
+	<div class="dropdown">
+		<div class="dropdown-header">Account</div>
+		<ul class="dropdown-content">
+			<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+			<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+		</ul>
+	</div>
+
+}

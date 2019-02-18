@@ -1,0 +1,101 @@
+﻿@model CapstoneProject.Models.ViewModels.RestaurantVM
+
+@{
+	/**/
+
+	ViewBag.Title = "Details";
+}
+
+<div>
+	<h2>@Html.DisplayFor(model => Model.Name)</h2>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.CityState)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.CityState)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Address)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Address)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.ZipCode)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.ZipCode)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.PhoneNum)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.PhoneNum)
+		</dd>
+
+		<dt>
+			Managers
+		</dt>
+
+		<dd>
+			<ul>
+
+				@foreach (var manager in ViewBag.Managers)
+				{
+					string managerName = manager.Person.Name;
+					<li>@Html.ActionLink(managerName, "Details", "Employees", new { id = manager.PersonId }, null)</li>
+				}
+			</ul>
+		</dd>
+
+		@if (ViewBag.OtherLocations.Count > 0)
+		{
+			<dt>
+				Other Locations
+			</dt>
+			<dd>
+				<ul>
+					@foreach (var location in ViewBag.OtherLocations)
+					{
+						string locationName = location.LocationName;
+						<li>@Html.ActionLink(locationName, "Details", new { id = location.Id })</li>
+					}
+				</ul>
+			</dd>
+		}
+	</dl>
+</div>
+
+<button class="accordion">Employees</button>
+<div class="panel">
+	@Html.Action("_IndexPane", "Employees", new { id = Model.Id })
+</div>
+
+<button class="accordion">Inventory</button>
+<div class="panel">
+	@Html.Action("_IndexPane", "RestaurantItems", new { id = Model.Id })
+</div>
+
+<button class="accordion">Schedule</button>
+<div class="panel">
+	@Html.Action("_IndexPane", "ScheduleDays", new { id = Model.Id })
+</div>
+
+<button class="accordion">Alerts</button>
+<div class="panel">
+	@Html.Action("_IndexPane", "Alerts", new { id = Model.Id })
+</div>
+
+@section Scripts {
+	<script src="~/Scripts/accordion.js"></script>
+	<script src="~/Scripts/stockchange.js"></script>
+}

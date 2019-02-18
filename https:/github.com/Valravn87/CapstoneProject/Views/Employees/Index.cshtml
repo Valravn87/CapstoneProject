@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CapstoneProject.Models.Person>
+
+@{
+				/**/
+
+				ViewBag.Title = "Index";
+}
+
+
+	@*@{
+		var rest = Model.FirstOrDefault().Restaurant;
+		var rvm = new CapstoneProject.Models.ViewModels.RestaurantVM(rest);
+		string header = rvm.Name;
+	}*@
+	<h4>Employees for</h4>
+	<h2>@Html.ActionLink((string)ViewBag.RestaurantName, "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)</h2>
+
+
+	<h3>@Html.ActionLink("Add Employee", "Create", new { id = ViewBag.RestaurantId })</h3>
+<hr />
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Name)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.PhoneNum)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Email)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.BalanceOwed)
+		</th>
+		<th>
+			Manager
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+<tr class="@(item.UserProfiles.Any() ? "manager-row" : "")">
+	<td>
+		@Html.DisplayFor(modelItem => item.Name)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.PhoneNum)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.Email)
+	</td>
+	<td>
+		@Html.DisplayFor(modelItem => item.BalanceOwed)
+	</td>
+	<td>
+		@if (item.UserProfiles.Any())
+		{
+			@:Yes
+		}
+		else
+		{
+			@:No
+		}
+	</td>
+	<td>
+		@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+		@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+		@*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+		<a href="~/Employees/Delete/@(item.Id)">
+			<img src="~/css/images/close.png" class="x-delete"/>
+		</a>	
+	</td>
+</tr>
+}
+</table>
+<hr />
+<h3>
+	@Html.ActionLink("Back", "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)
+</h3>

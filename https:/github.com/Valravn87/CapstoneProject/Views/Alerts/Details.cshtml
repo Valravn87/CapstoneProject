@@ -1,0 +1,15 @@
+﻿@model CapstoneProject.Models.Alert
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+	<h2>Alert</h2>
+	<hr />
+	@Html.Action("_DetailsPartial", new { id = Model.Id})
+</div>
+<div class="bottom-links">
+	<h3>@Html.ActionLink("Back", "Details", "Restaurants", new { id = ViewBag.RestaurantId }, null)</h3>
+</div>
+

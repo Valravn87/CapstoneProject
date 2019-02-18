@@ -1,0 +1,13 @@
+﻿@model int?
+
+@using (Html.BeginForm("PostAlertBoth", "Alerts", new { id = Model }, FormMethod.Post))
+{
+
+	@Html.AntiForgeryToken()
+	<h4>Red and Yellow Items:</h4>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Post Alert" class="btn btn-default" />
+		</div>
+	</div>
+}

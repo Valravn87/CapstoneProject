@@ -1,0 +1,41 @@
+﻿@model CapstoneProject.Models.RestaurantItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Details</h4>
+
+<div>
+    <h2>RestaurantItem</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stock.Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stock.Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurant.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Restaurant.Address)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", new { id = Model.RestaurantId })
+</p>
