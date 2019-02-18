@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="People" EntityType="Model1.Person" />
+    <EntitySet Name="RestaurantGroups" EntityType="Model1.RestaurantGroup" />
+    <EntitySet Name="Restaurants" EntityType="Model1.Restaurant" />
+    <EntitySet Name="Items" EntityType="Model1.Item" />
+    <AssociationSet Name="UserProfileRestaurant" Association="Model1.UserProfileRestaurant">
+      <End EntitySet="People" Role="UserProfile" />
+      <End EntitySet="Restaurants" Role="Restaurant" />
+    </AssociationSet>
+    <AssociationSet Name="RestaurantGroupRestaurant" Association="Model1.RestaurantGroupRestaurant">
+      <End Role="RestaurantGroup" EntitySet="RestaurantGroups" />
+      <End Role="Restaurant" EntitySet="Restaurants" />
+    </AssociationSet>
+    <EntitySet Name="RestaurantItems" EntityType="Model1.RestaurantItem" />
+    <EntitySet Name="Stocks" EntityType="Model1.Stock" />
+    <AssociationSet Name="RestaurantItemItem" Association="Model1.RestaurantItemItem">
+      <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="StockRestaurantItem" Association="Model1.StockRestaurantItem">
+      <End Role="Stock" EntitySet="Stocks" />
+      <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+    </AssociationSet>
+    <AssociationSet Name="RestaurantRestaurantItem1" Association="Model1.RestaurantRestaurantItem1">
+      <End Role="Restaurant" EntitySet="Restaurants" />
+      <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+    </AssociationSet>
+    <EntitySet Name="UserProfiles" EntityType="Model1.UserProfile" />
+    <AssociationSet Name="PersonUserProfile" Association="Model1.PersonUserProfile">
+      <End Role="Person" EntitySet="People" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <EntitySet Name="Alerts" EntityType="Model1.Alert" />
+    <AssociationSet Name="AlertPerson" Association="Model1.AlertPerson">
+      <End Role="Alert" EntitySet="Alerts" />
+      <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+    <EntitySet Name="ItemAlerts" EntityType="Model1.ItemAlert" />
+    <AssociationSet Name="AlertItemAlert" Association="Model1.AlertItemAlert">
+      <End Role="Alert" EntitySet="Alerts" />
+      <End Role="ItemAlert" EntitySet="ItemAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="RestaurantItemItemAlert" Association="Model1.RestaurantItemItemAlert">
+      <End Role="RestaurantItem" EntitySet="RestaurantItems" />
+      <End Role="ItemAlert" EntitySet="ItemAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="StockItemAlert" Association="Model1.StockItemAlert">
+      <End Role="Stock" EntitySet="Stocks" />
+      <End Role="ItemAlert" EntitySet="ItemAlerts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RestaurantId" Nullable="false" Type="Int32" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <Property Name="City" Type="String" Nullable="false" />
+    <Property Name="State" Type="String" Nullable="false" />
+    <Property Name="PhoneNum" Type="String" Nullable="false" />
+    <Property Name="Email" Type="String" Nullable="false" />
+    <Property Name="BalanceOwed" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="Restaurant" Relationship="Model1.UserProfileRestaurant" FromRole="UserProfile" ToRole="Restaurant" />
+    <NavigationProperty Name="UserProfile" Relationship="Model1.PersonUserProfile" FromRole="Person" ToRole="UserProfile" />
+    <NavigationProperty Name="Alert" Relationship="Model1.AlertPerson" FromRole="Person" ToRole="Alert" />
+  </EntityType>
+  <EntityType Name="RestaurantGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Restaurants" Relationship="Model1.RestaurantGroupRestaurant" FromRole="RestaurantGroup" ToRole="Restaurant" />
+  </EntityType>
+  <EntityType Name="Restaurant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <Property Name="City" Type="String" Nullable="false" />
+    <Property Name="State" Type="String" Nullable="false" />
+    <Property Name="PhoneNum" Type="String" Nullable="false" />
+    <NavigationProperty Name="UserProfiles" Relationship="Model1.UserProfileRestaurant" FromRole="Restaurant" ToRole="UserProfile" />
+    <NavigationProperty Name="RestaurantGroup" Relationship="Model1.RestaurantGroupRestaurant" FromRole="Restaurant" ToRole="RestaurantGroup" />
+    <NavigationProperty Name="RestaurantItems" Relationship="Model1.RestaurantRestaurantItem1" FromRole="Restaurant" ToRole="RestaurantItem" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="RestaurantItems" Relationship="Model1.RestaurantItemItem" FromRole="Item" ToRole="RestaurantItem" />
+  </EntityType>
+  <Association Name="UserProfileRestaurant">
+    <End Type="Model1.Person" Multiplicity="*" Role="UserProfile" />
+    <End Type="Model1.Restaurant" Multiplicity="1" Role="Restaurant" />
+    <ReferentialConstraint>
+      <Principal Role="Restaurant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="RestaurantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RestaurantGroupRestaurant">
+    <End Type="Model1.RestaurantGroup" Role="RestaurantGroup" Multiplicity="1" />
+    <End Type="Model1.Restaurant" Role="Restaurant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RestaurantGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Restaurant">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RestaurantItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="RestaurantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="StockCode" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Model1.RestaurantItemItem" FromRole="RestaurantItem" ToRole="Item" />
+    <NavigationProperty Name="Stock" Relationship="Model1.StockRestaurantItem" FromRole="RestaurantItem" ToRole="Stock" />
+    <NavigationProperty Name="Restaurant" Relationship="Model1.RestaurantRestaurantItem1" FromRole="RestaurantItem" ToRole="Restaurant" />
+    <NavigationProperty Name="ItemAlerts" Relationship="Model1.RestaurantItemItemAlert" FromRole="RestaurantItem" ToRole="ItemAlert" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Level" Type="String" Nullable="false" />
+    <NavigationProperty Name="RestaurantItems" Relationship="Model1.StockRestaurantItem" FromRole="Stock" ToRole="RestaurantItem" />
+    <NavigationProperty Name="ItemAlerts" Relationship="Model1.StockItemAlert" FromRole="Stock" ToRole="ItemAlert" />
+  </EntityType>
+  <Association Name="RestaurantItemItem">
+    <End Type="Model1.RestaurantItem" Role="RestaurantItem" Multiplicity="*" />
+    <End Type="Model1.Item" Role="Item" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RestaurantItem">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StockRestaurantItem">
+    <End Type="Model1.Stock" Role="Stock" Multiplicity="1" />
+    <End Type="Model1.RestaurantItem" Role="RestaurantItem" Multiplicity="*" />
+  </Association>
+  <Association Name="RestaurantRestaurantItem1">
+    <End Type="Model1.Restaurant" Role="Restaurant" Multiplicity="1" />
+    <End Type="Model1.RestaurantItem" Role="RestaurantItem" Multiplicity="*" />
+  </Association>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Person" Relationship="Model1.PersonUserProfile" FromRole="UserProfile" ToRole="Person" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="isOwner" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="PersonUserProfile">
+    <End Type="Model1.Person" Role="Person" Multiplicity="1" />
+    <End Type="Model1.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+  </Association>
+  <EntityType Name="Alert">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="true" />
+    <NavigationProperty Name="People" Relationship="Model1.AlertPerson" FromRole="Alert" ToRole="Person" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="ItemAlerts" Relationship="Model1.AlertItemAlert" FromRole="Alert" ToRole="ItemAlert" />
+  </EntityType>
+  <Association Name="AlertPerson">
+    <End Type="Model1.Alert" Role="Alert" Multiplicity="1" />
+    <End Type="Model1.Person" Role="Person" Multiplicity="*" />
+  </Association>
+  <EntityType Name="ItemAlert">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AlertId" Type="Int32" Nullable="false" />
+    <Property Name="RestaurantItemId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Alert" Relationship="Model1.AlertItemAlert" FromRole="ItemAlert" ToRole="Alert" />
+    <NavigationProperty Name="RestaurantItem" Relationship="Model1.RestaurantItemItemAlert" FromRole="ItemAlert" ToRole="RestaurantItem" />
+    <Property Name="StockCode" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Stock" Relationship="Model1.StockItemAlert" FromRole="ItemAlert" ToRole="Stock" />
+  </EntityType>
+  <Association Name="AlertItemAlert">
+    <End Type="Model1.Alert" Role="Alert" Multiplicity="1" />
+    <End Type="Model1.ItemAlert" Role="ItemAlert" Multiplicity="*" />
+  </Association>
+  <Association Name="RestaurantItemItemAlert">
+    <End Type="Model1.RestaurantItem" Role="RestaurantItem" Multiplicity="1" />
+    <End Type="Model1.ItemAlert" Role="ItemAlert" Multiplicity="*" />
+  </Association>
+  <Association Name="StockItemAlert">
+    <End Type="Model1.Stock" Role="Stock" Multiplicity="1" />
+    <End Type="Model1.ItemAlert" Role="ItemAlert" Multiplicity="*" />
+  </Association>
+</Schema>
